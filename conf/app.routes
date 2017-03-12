@@ -1,3 +1,3 @@
 # microservice specific routes
 
-GET        /hello-world             uk.gov.hmrc.samplescalamongo.controllers.HelloWorld.helloWorld
+GET        /registration             uk.gov.hmrc.samplescalamongo.controllers.RegistrationController.showForm()
