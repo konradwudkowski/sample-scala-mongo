@@ -10,7 +10,7 @@ case class UserData(name: String, sex: String, age: Int, country: Country, dateC
 
 object UserData {
   val countryMapper = text.transform[Country](Country.apply, _.name)
-  implicit val countryFormat = Country.defaultFormat
+  implicit val countryFormat = Country.mongoSimpleFormat
   val format = Json.format[UserData]
   val form = Form(
     mapping(
