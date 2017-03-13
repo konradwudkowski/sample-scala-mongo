@@ -1,15 +1,15 @@
-package uk.gov.hmrc.samplescalamongo
+package uk.gov.hmrc.samplescalamongo.connectors
 
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.time.{Seconds, Span}
 import org.scalatest.{FlatSpec, Matchers}
 import org.scalatestplus.play.OneAppPerSuite
 import play.api.Configuration
+import play.api.libs.json.{JsObject, Json}
 import play.api.mvc._
 import play.api.routing.sird._
 import play.api.test._
 import play.core.server.Server
-import uk.gov.hmrc.samplescalamongo.connectors.CountriesClient
 import uk.gov.hmrc.samplescalamongo.model.Country
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -40,13 +40,11 @@ class CountriesClientSpec extends FlatSpec with Matchers with ScalaFutures with 
   }
 
   it should "work with a complex real list of countries" in {
-    val longListOfCountries =
-      Source.fromInputStream(app.resourceAsStream("sample-countries.json").get).mkString
+    val longListOfCountries = Source.fromInputStream(app.resourceAsStream("sample-countries.json").get).mkString
+    val expectedNumberOfCountries = Json.parse(longListOfCountries).as[Array[JsObject]].length
 
-    noException shouldBe thrownBy {
-      withCountriesMockServer(longListOfCountries) { client =>
-        client.getCountries.futureValue
-      }
+    withCountriesMockServer(longListOfCountries) { client =>
+      client.getCountries.futureValue.size shouldBe expectedNumberOfCountries
     }
   }
 
@@ -56,7 +54,7 @@ class CountriesClientSpec extends FlatSpec with Matchers with ScalaFutures with 
     } { implicit port =>
       val config = Configuration("countries-url" -> s"http://localhost:$port")
       WsTestClient.withClient { client =>
-        block(new CountriesClient(client, config))
+        block(new CountriesClientImpl(client, config))
       }
     }
   }

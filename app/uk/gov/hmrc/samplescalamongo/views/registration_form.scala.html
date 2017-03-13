@@ -1,9 +1,10 @@
-@import uk.gov.hmrc.samplescalamongo.model.RegistrationRequest
+@import uk.gov.hmrc.samplescalamongo.model.UserData
 @import uk.gov.hmrc.samplescalamongo.model.Country
 
-@(registrationForm: Form[RegistrationRequest], countries: Seq[Country])(implicit request: Request[_], messages: Messages)
+@import java.time.LocalDate
+@(registrationForm: Form[UserData], countries: Seq[Country])(implicit request: Request[_], messages: Messages)
 
-@uk.gov.hmrc.samplescalamongo.views.html.main_template(title = "Hello from sample-scala-mongo", bodyClasses = None) {
+@uk.gov.hmrc.samplescalamongo.views.html.main_template(title = "Registration", bodyClasses = None) {
     <h1>Some Useful Government Service</h1>
 
   <form action ="@uk.gov.hmrc.samplescalamongo.controllers.routes.RegistrationController.submit" method="post">
@@ -15,7 +16,7 @@
         <label for="name" class="@if(registrationForm("name").hasErrors){form-field--error}">
           @registrationForm("name").errors.map { error => <span class="error-notification"> @Messages(error.message) </span> }
           Name
-          <input type="text" id="name" name="name" class="form-control form-control--block"/>
+          <input type="text" id="name" name="name" class="form-control form-control--block" value="@registrationForm("name").value"/>
         </label>
       </fieldset>
 
@@ -28,6 +29,8 @@
           <input type="radio"
           id="sex-male"
           name="sex"
+          value="male"
+          @registrationForm("sex").value.filter(_ == "male").map(_ => "checked")
           required />
         </label>
 
@@ -35,6 +38,8 @@
           <input type="radio"
           id="sex-female"
           name="sex"
+          value="female"
+          @registrationForm("sex").value.filter(_ == "female").map(_ => "checked")
           required />
         </label>
       </fieldset>
@@ -43,10 +48,9 @@
         <label for="age" class="@if(registrationForm("age").hasErrors){form-field--error}">
           @registrationForm("age").errors.map { error => <span class="error-notification"> @Messages(error.message) </span> }
           Age
-          <input type="text" id="age" name="age" class="form-control form-control--block"/>
+          <input type="text" id="age" name="age" class="form-control form-control--block" value="@registrationForm("age").value"/>
         </label>
       </fieldset>
-
 
       <fieldset class="inline form-field-group" >
         <label for="country">
@@ -54,10 +58,14 @@
         </label>
         <select class="select form-control form-control--block" name="country" id="country" >
           @for(c <- countries) {
-            <option value="@c.name">@c.name</option>
+            <option value="@c.name" @registrationForm("country").value.filter(_ == c.name).map(_ => "selected")>
+              @c.name
+            </option>
           }
         </select>
       </fieldset>
+
+      <input type="hidden" name="dateCreated" id="dateCreated" value="@{ LocalDate.now() }" />
 
     </div>
 

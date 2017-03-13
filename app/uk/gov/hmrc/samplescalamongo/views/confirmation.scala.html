@@ -1,0 +1,6 @@
+@(name: String)(implicit request: Request[_], messages: Messages)
+
+@uk.gov.hmrc.samplescalamongo.views.html.main_template(title = "Confirmation", bodyClasses = None) {
+    <h1>Application Complete</h1>
+    <p>Thank you @name for applying to this useful government service</p>
+}
