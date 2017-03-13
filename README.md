@@ -1,7 +1,5 @@
 # sample-scala-mongo
 
-[![Build Status](https://travis-ci.org/hmrc/sample-scala-mongo.svg)](https://travis-ci.org/hmrc/sample-scala-mongo) [ ![Download](https://api.bintray.com/packages/hmrc/releases/sample-scala-mongo/images/download.svg) ](https://bintray.com/hmrc/releases/sample-scala-mongo/_latestVersion)
-
 ## Prerequisites
 
 - mongo db running on port 27017
