@@ -7,10 +7,12 @@
 - sbt
 
 ASSETS_FRONTEND can be started from service-manager by running
-```sm --start ASSETS_FRONTEND``` or alternatively follow instructions here: https://github.com/hmrc/assets-frontend to run using node
+```sm --start ASSETS_FRONTEND -f``` or alternatively follow instructions here: https://github.com/hmrc/assets-frontend to run using `node`
 
 ## Running application locally:
 ```sbt run```
+
+(tested on linux)
 
 App can be accessed at: ```http://localhost:9000/sample-scala-mongo/registration```
 ### License
