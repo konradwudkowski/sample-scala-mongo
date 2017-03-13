@@ -1,3 +1,4 @@
 # microservice specific routes
 
 GET        /registration             uk.gov.hmrc.samplescalamongo.controllers.RegistrationController.showForm()
+POST       /registration             uk.gov.hmrc.samplescalamongo.controllers.RegistrationController.submit()

@@ -9,7 +9,8 @@ import play.api.mvc._
 import play.api.routing.sird._
 import play.api.test._
 import play.core.server.Server
-import uk.gov.hmrc.samplescalamongo.connectors.{CountriesClient, Country}
+import uk.gov.hmrc.samplescalamongo.connectors.CountriesClient
+import uk.gov.hmrc.samplescalamongo.model.Country
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.io.Source
